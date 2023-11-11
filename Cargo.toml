@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 askama = { version = "0.12.1", features = ["with-axum", "serde", "serde-json", "markdown"] }
+askama_axum = "0.3.0"
 axum = "0.6.20"
 clap = { version = "4.4.7", features = ["env", "derive"] }
 rand = "0.8.5"

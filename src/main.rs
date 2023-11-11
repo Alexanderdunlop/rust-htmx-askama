@@ -1,21 +1,14 @@
 
-use axum::{extract::Query, response::Html, routing::get, Router};
-use rand::{thread_rng, Rng};
-use serde::Deserialize;
+use axum::{response::Html, routing::get, Router};
 
-// `Deserialize` need be implemented to use with `Query`
-#[derive(Deserialize)]
-struct  RangeParameter {
-    start: usize,
-    end: usize,
-}
+use askama::Template;
 
-async fn handler(Query(range): Query<RangeParameter>) -> Html<String> {
-    // Generate a random rumber in range parsed from query.
-    let random_number = thread_rng().gen_range(range.start..range.end);
-    
-    // Send response in html format.
-    Html(format!("<h1>Random Number: {}</h1>", random_number))
+#[derive(Template)]
+#[template(path = "index.html")]
+pub struct MyTemplate {}
+
+async fn handler() -> Html<String> {
+    return Html(MyTemplate {}.render().unwrap())
 }
 
 #[tokio::main]
