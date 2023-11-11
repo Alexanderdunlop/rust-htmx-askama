@@ -1,19 +1,15 @@
+mod templates;
 
-use axum::{response::Html, routing::get, Router};
+use axum::{routing::get, Router};
+use templates::IndexTemplate;
 
-use askama::Template;
-
-#[derive(Template)]
-#[template(path = "index.html")]
-pub struct MyTemplate {}
-
-async fn handler() -> Html<String> {
-    return Html(MyTemplate {}.render().unwrap())
+async fn index() -> IndexTemplate {
+    return IndexTemplate {};
 }
 
 #[tokio::main]
 async fn main() {
-    let app = Router::new().route("/", get(handler));
+    let app = Router::new().route("/", get(index));
 
     axum::Server::bind(&"0.0.0.0:42069".parse().unwrap())
         .serve(app.into_make_service())
